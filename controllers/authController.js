@@ -2,17 +2,18 @@ const usuarios = [];
 
 const login = (req, res) => {
     const { email, senha } = req.body;
+    const user = usuarios.find((user) => user.email === email && user.senha === senha);
 
     if (email === 'admin@exemple.com' && senha === '12345678') {
         return res.status(200).json({ message: 'Sucesso', token: 'admin-token' });
     }
-
-    const user = usuarios.find((user) => user.email === email && user.senha === senha);
-    if (user) {
+    else if(user) {
         return res.status(200).json({ message: 'Sucesso', token: 'user-token' });
     }
-
-    return res.status(401).json({ message: 'Credenciais Inválidas' });
+    else {
+        return res.status(401).json({ message: 'Credenciais Inválidas' });
+    }
+    
 }
 
 
